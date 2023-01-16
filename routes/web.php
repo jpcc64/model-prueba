@@ -42,4 +42,12 @@ Route::get('/dashboard', function () {
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+Route::get('community', [
+    App\Http\Controllers\CommunityLinkController::class,
+    'index',
+]);
+Route::post('community', [
+    App\Http\Controllers\CommunityLinkController::class,
+    'store',
+]);
 require __DIR__ . '/auth.php';
