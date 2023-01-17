@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use Hamcrest\Number\OrderingComparison;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -50,4 +51,35 @@ Route::post('community', [
     App\Http\Controllers\CommunityLinkController::class,
     'store',
 ]);
+
+Route::get('/prueba/{num?}', function ($num = null) {
+    return "hello prueba $num";
+});
+Route::get('/prueba/{num?}', function ($num = '8') {
+    return "hello prueba $num";
+});
+
+Route::post('/pruebaPost', function () {
+    return 'Prueba por POST';
+});
+
+Route::controller(OrderController::class)->group(function () {
+    Route::get('/controller/{name?}', function ($name) {
+        return "hola $name desde GET";
+    });
+    Route::post('/controller', function ($name = 'juan') {
+        return "hola $name desde POST";
+    });
+});
+
+Route::get('/numero/{num?}', function ($num = '8') {
+    return "$num es un numero";
+})->whereNumber('num');
+
+Route::get('/{name?}/{num?}', function ($name,$num ) {
+    return "hello $name $num";
+})
+    ->whereAlpha('name')
+    ->whereNumber('num');
+
 require __DIR__ . '/auth.php';
