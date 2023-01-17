@@ -14,7 +14,10 @@ class CommunityLink extends Model
         'channel_id',
         'title',
         'link',
-        'approved'
+        'approved',
     ];
-    
+    public function creator()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }
