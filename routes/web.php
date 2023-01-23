@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Hamcrest\Number\OrderingComparison;
 use Illuminate\Support\Facades\Route;
+use PHPUnit\TextUI\XmlConfiguration\Variable;
 
 /*
 |--------------------------------------------------------------------------
@@ -52,34 +53,71 @@ Route::post('community', [
     'store',
 ]);
 
-Route::get('/prueba/{num?}', function ($num = null) {
-    return "hello prueba $num";
-});
-Route::get('/prueba/{num?}', function ($num = '8') {
-    return "hello prueba $num";
+// Route::get('/prueba/{num?}', function ($num = null) {
+//     return "hello prueba $num";
+// });
+// Route::get('/prueba/{num?}', function ($num = '8') {
+//     return "hello prueba $num";
+// });
+
+// Route::post('/pruebaPost', function () {
+//     return 'Prueba por POST';
+// });
+
+// Route::controller(OrderController::class)->group(function () {
+//     Route::get('/controller/{name?}', function ($name) {
+//         return "hola $name desde GET";
+//     });
+//     Route::post('/controller', function ($name = 'juan') {
+//         return "hola $name desde POST";
+//     });
+// });
+
+// Route::get('/numero/{num?}', function ($num = '8') {
+//     return "$num es un numero";
+// })->whereNumber('num');
+
+// Route::get('/{name?}/{num?}', function ($name,$num ) {
+//     return "hello $name $num";
+// })
+//     ->whereAlpha('name')
+//     ->whereNumber('num');
+
+Route::get('/host', function () {
+    $env = env('DB_HOST');
+    return "La ip del host es $env";
 });
 
-Route::post('/pruebaPost', function () {
-    return 'Prueba por POST';
+Route::get('/timezone', function () {
+    $conf = config('app.timezone', 'Europe/Madrid');
+    return "La timezone es $conf";
 });
 
-Route::controller(OrderController::class)->group(function () {
-    Route::get('/controller/{name?}', function ($name) {
-        return "hola $name desde GET";
-    });
-    Route::post('/controller', function ($name = 'juan') {
-        return "hola $name desde POST";
-    });
+Route::view('/inicio', 'home');
+
+Route::get('/fecha', function () {
+    date_default_timezone_set('UTC');
+    return view('fecha', ['dia' => date('d'), 'mes'=>date('F'), 'anio'=>date('Y')]);
 });
 
-Route::get('/numero/{num?}', function ($num = '8') {
-    return "$num es un numero";
-})->whereNumber('num');
+// Route::get('/fecha', function () {
+//     $dia = date('d');
+//     $mes = date('F');
+//     $anio = date('Y');
+//     $sentencia = 'hoy es ';
+//     $fecha_actual = ['dia'=>$dia,'mes'=>$mes,'anio'=> $anio];
 
-Route::get('/{name?}/{num?}', function ($name,$num ) {
-    return "hello $name $num";
-})
-    ->whereAlpha('name')
-    ->whereNumber('num');
+//     $resultado = compact('sentencia', 'fecha_actual');
+//      print_r($resultado);
+// });
+
+Route::get('/fecha', function () {
+    return view('fecha')
+    ->with('dia',date('d'))
+    ->with('mes',date('F'))
+    ->with('anio',date('Y'));
+});
+
+
 
 require __DIR__ . '/auth.php';
