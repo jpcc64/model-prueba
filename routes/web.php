@@ -45,9 +45,14 @@ Route::get('/dashboard', function () {
 Route::get('community', [
     App\Http\Controllers\CommunityLinkController::class,
     'index',
-]);
+])->middleware(['auth', 'verified']);
 Route::post('community', [
     App\Http\Controllers\CommunityLinkController::class,
     'store',
-]);
+])->middleware(['auth', 'verified']);
 require __DIR__ . '/auth.php';
+
+// A34 ejercicio 4
+Route::get('/res', function () {
+    return response('Respuesta', 200);
+});

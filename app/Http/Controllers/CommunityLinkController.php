@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\CommunityLink;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CommunityLinkController extends Controller
 {
@@ -14,7 +15,7 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::paginate(10);
+        $links = CommunityLink::paginate(25);
         return view('community/index', compact('links'));
     }
 
@@ -36,7 +37,19 @@ class CommunityLinkController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request); //tiene los datos del formulario en request
+        // dd($request->all()); //tiene solo los datos del formulario
+        // dd($request->url()); //tiene la url del action del formulario
+        // dd($request->input()); //contienen los input del formulario
+        // dd($request->fullUrl()); //devuelve lo mismo que el metodo url()
+        $this->validate($request, [
+            'title' => 'required',
+            'link' => 'required|activel_url',
+        ]);
+        
+        request()->merge(['user_id' => Auth::id(), 'channel_id' => 1]);
+        CommunityLink::create($request->all());
+        return back();
     }
 
     /**
