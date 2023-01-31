@@ -18,8 +18,8 @@ class ChannelFactory extends Factory
     {
         return [
             'title'=> $this->faker->sentence,
-            'slug'=> $this->faker->slug,
-            'color'=> $this->faker->safeColorName,
+            'slug'=> $this->faker->slug(),
+            'color'=> $this->faker->safeColorName(),
         ];
     }
 }

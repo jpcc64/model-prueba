@@ -53,6 +53,6 @@ Route::post('community', [
 require __DIR__ . '/auth.php';
 
 // A34 ejercicio 4
-Route::get('/res', function () {
-    return response('Respuesta', 200);
-});
+// Route::get('/res', function () {
+//     return response('Respuesta', 200);
+// });

@@ -45,7 +45,7 @@ class CommunityLinkController extends Controller
         // dd($request->fullUrl()); //devuelve lo mismo que el metodo url()
         $this->validate($request, [
             'title' => 'required',
-            'link' => 'required|activel_url',
+            'link' => 'required|active_url|unique:community_links',
             'channel_id' => 'required|exists:channels,id'
             
         ]);
