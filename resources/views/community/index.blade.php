@@ -27,7 +27,7 @@
 
         </div>
     </div>
-    {{$links->links()}}
+    
 
 </div>
 @stop

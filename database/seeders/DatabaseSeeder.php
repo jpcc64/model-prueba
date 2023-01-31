@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use App\Models\CommunityLink;
+use App\Models\Channel;
 class DatabaseSeeder extends Seeder
 {
     /**
@@ -25,5 +26,7 @@ class DatabaseSeeder extends Seeder
         CommunityLink::factory()
             ->count(50)
             ->create();
+        DB::delete('delete from channels');
+        Channel::factory()->count(10)->create();
     }
 }

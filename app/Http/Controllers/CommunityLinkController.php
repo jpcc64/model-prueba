@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CommunityLink;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use App\Models\Channel;
 class CommunityLinkController extends Controller
 {
     /**
@@ -16,7 +16,8 @@ class CommunityLinkController extends Controller
     public function index()
     {
         $links = CommunityLink::paginate(25);
-        return view('community/index', compact('links'));
+        $channels = Channel::orderBy('title', 'asc')->get();
+        return view('community/index', compact('links','channels'));
     }
 
     /**
@@ -45,9 +46,11 @@ class CommunityLinkController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'link' => 'required|activel_url',
+            'channel_id' => 'required|exists:channels,id'
+            
         ]);
         
-        request()->merge(['user_id' => Auth::id(), 'channel_id' => 1]);
+        request()->merge(['user_id' => Auth::id(),'channel_id'=> Auth::id() ]);
         CommunityLink::create($request->all());
         return back();
     }
