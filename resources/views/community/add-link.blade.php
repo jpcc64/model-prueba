@@ -4,16 +4,17 @@
                            <div class="form-group">
                                <label for="title">Title:</label>
                                <input type="text" class="@error('title') is-invalid  @enderror form-control"
-                                id="title" name="title" value="{{old('title',$link->title ? '' : $link->title)}}" placeholder="What is the title of your article?">
+                                id="title" name="title" value="{{old('title')}}" placeholder="What is the title of your article?">
                                @error('title')
                                    <div class="alert_alert-danger">{{ $message }}</div>
                                @enderror
+                            
                            </div>
 
                            <div class="form-group">
                                <label for="link">Link:</label>
                                <input type="text" class="@error('link') is-invalid @enderror form-control"
-                                   id="link" name="link"  value="{{old('link' ,$link->link ? '' : $link->lin ) }}" placeholder="What is the URL?">
+                                   id="link" name="link"  value="{{old('link') }}" placeholder="What is the URL?"> 
                                @error('link')
                                    <div class="alert_alert-danger">{{ $message }}</div>
                                @enderror
