@@ -15,9 +15,9 @@ class CommunityLinkController extends Controller
      */
     public function index()
     {
-        $links = CommunityLink::paginate(25);
+        $links = CommunityLink::where('approved', 1)->paginate(25);
         $channels = Channel::orderBy('title', 'asc')->get();
-        return view('community/index', compact('links','channels'));
+        return view('community/index', compact('links', 'channels'));
     }
 
     /**
@@ -46,13 +46,16 @@ class CommunityLinkController extends Controller
         $this->validate($request, [
             'title' => 'required',
             'link' => 'required|active_url|unique:community_links',
-            'channel_id' => 'required|exists:channels,id'
-            
+            'channel_id' => 'required|exists:channels,id',
         ]);
-        
-        request()->merge(['user_id' => Auth::id(),'channel_id'=> Auth::id() ]);
+        $approved = Auth::user()->trusted ? true : false;
+        request()->merge(['user_id' => Auth::id(), 'approved' => $approved]);
         CommunityLink::create($request->all());
-        return back();
+        if ($approved == false) {
+            return back()->with('warning', 'You are not verified');
+        } else {
+            return back()->with('success', 'Link created succssfully');
+        }
     }
 
     /**
