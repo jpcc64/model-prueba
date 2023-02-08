@@ -17,7 +17,7 @@ class ChannelFactory extends Factory
     public function definition()
     {
         return [
-            'title'=> $this->faker->sentence,
+            'title'=> $this->faker->streetSuffix(),
             'slug'=> $this->faker->slug(),
             'color'=> $this->faker->safeColorName(),
         ];
