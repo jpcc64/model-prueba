@@ -13,15 +13,23 @@ class CommunityLinkController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Channel $channel = null)
     {
-        $links = CommunityLink::where('approved', 1)
-            ->latest('updated_at')
-            ->paginate(25);
-        $channels = Channel::orderBy('title', 'asc')->get();
-        return view('community/index', compact('channels', 'links'));
-    }
+        //    dd($channel->links);
 
+        if ($channel) {
+            $links = $channel->links()->paginate(25);
+        } else {
+            $links = CommunityLink::where('approved', 1)
+                ->latest('updated_at')
+                ->paginate(25);
+        }
+        //  dd($links);
+
+        $channels = Channel::orderBy('title', 'asc')->get();
+
+        return view('community/index', compact('channels', 'links', 'channel'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -49,14 +57,17 @@ class CommunityLinkController extends Controller
 
         $request->merge(['user_id' => Auth::id(), 'approved' => $approved]);
 
-        CommunityLink::hasAlreadyBeenSubmitted($request->link);
-
-        CommunityLink::create($request->all());
+        $link = new CommunityLink();
+        $link->user_id = Auth::id();
 
         if ($approved == false) {
             return back()->with('warning', 'You are not verified');
-        } else {
+        } elseif (!$link->hasAlreadyBeenSubmitted($request->link)) {
+            CommunityLink::create($request->all());
+
             return back()->with('success', 'Link created succssfully');
+        } else {
+            return back()->with('success', 'Link updated successfully');
         }
     }
 

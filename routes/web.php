@@ -52,7 +52,5 @@ Route::post('community', [
 ])->middleware(['auth', 'verified']);
 require __DIR__ . '/auth.php';
 
-// A34 ejercicio 4
-// Route::get('/res', function () {
-//     return response('Respuesta', 200);
-// });
+Route::get('community/{channel}', [
+   App\Http\Controllers\CommunityLinkController::class, 'index']);;

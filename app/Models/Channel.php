@@ -9,9 +9,14 @@ class Channel extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'title',
-        'slug',
-        'color',
-    ];
+    protected $fillable = ['title', 'slug', 'color'];
+    public function getRouteKeyName()
+    {
+        return 'slug';
+    }
+    
+        public function links()
+    {
+        return $this->hasMany(CommunityLink::class);
+    }
 }

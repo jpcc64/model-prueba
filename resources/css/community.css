@@ -1,18 +1,15 @@
 
-
-main{
-    background-color: brown;
+#titleChannel{
+    color: aliceblue;
+    margin-right: 10px;
 }
 
-.title{
-    font-family: 'Roboto', sans-serif;
-    font-size: 40px;
-    font-weight: 700;
-    text-align: center;
-    color: #fff;
-    text-shadow: 0px 1px 0px rgba(0, 0, 0, 0.5);
-    border-radius: 5px;
-    padding: 10px;
-    background-color: #f5f5f5;
-
+h1#title{
+    font-size: 18px;
+    font-weight: bold;
+    text-align: start;
+}
+#link{
+    color: rgb(65, 160, 243);
+    text-decoration: underline;
 }

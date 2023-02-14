@@ -1,39 +1,43 @@
  <div class="container">
-        <div class="row">
-            <div class="col-md-8">
-                <h1 id="title">Community</h1>
+     <div class="row">
+         <div class="col-md-8">
+            <h1 id="title">Community - <a href="/community">{{$channel ? $channel->title : ""}}</a></h1>
+             
 
-                @if (count($links) == 0)
-                    <h1>No contributions yet</h1>
-                @else
-                    @foreach ($links as $link)
-                        <li>
-                            <span class="label label-default" style="background: {{ $link->channel->color }}">
-                                {{ $link->channel->title }}
-                            </span>
-                            <a href="{{ $link->link }}" target="_blank">
-                                {{ $link->title }}
-                            </a>
-                            <small>Contributed by: {{ $link->creator->name }}
-                                {{ $link->updated_at->diffForHumans() }}</small>
+             @forelse ($links as $link)
+                 <li>
+                     <a href="/community/{{ $link->channel->slug }}">
+                         <span class="label label-default" id="titleChannel"
+                             style="background: {{ $link->channel->color }}">
+                             {{ $link->channel->title }}
+                         </span>
+                     </a>
 
-                        </li>
-                    @endforeach
-                @endif
+                     <a id="link" href="{{ $link->link }}" target="_blank">
+                         {{ $link->title }}
+                     </a>
+                     <small>Contributed by: {{ $link->creator->name }}
+                         {{ $link->updated_at->diffForHumans() }}</small>
 
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3>Contribute a link</h3>
-                    </div>
+                 </li>
+             @empty
+                 <h1>No contributions yet</h1>
+             @endforelse
+         </div>
 
-                    @include('community.add-link')
+     </div>
+     <div class="col-md-4">
+         <div class="card">
+             <div class="card-header">
+                 <h3>Contribute a link</h3>
+             </div>
 
-                </div>
+             @include('community.add-link')
 
-            </div>
-        </div>
+         </div>
+
+     </div>
+ </div>
 
 
-    </div>
+ </div>
